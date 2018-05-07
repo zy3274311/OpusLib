@@ -12,6 +12,9 @@
 /* Do not build the float API */
 #undef DISABLE_FLOAT_API
 
+/* Disable bitstream fixes from RFC 8251 */
+#undef DISABLE_UPDATE_DRAFT
+
 /* Assertions */
 #undef ENABLE_ASSERTIONS
 
@@ -122,6 +125,9 @@
 
 /* This is a build of OPUS */
 #undef OPUS_BUILD
+
+/* Run bit-exactness checks between optimized and c implementations */
+#undef OPUS_CHECK_ASM
 
 /* Use run-time CPU capabilities detection */
 #undef OPUS_HAVE_RTCD

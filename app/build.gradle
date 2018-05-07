@@ -11,21 +11,30 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-/*        externalNativeBuild {
+
+        externalNativeBuild {
             ndkBuild {
                 arguments "NDK_APPLICATION_MK:=src/main/jni/Application.mk"
                 cFlags "-DTEST_C_FLAG1", "-DTEST_C_FLAG2"
                 cppFlags "-DTEST_CPP_FLAG2", "-DTEST_CPP_FLAG2"
                 abiFilters "armeabi-v7a", "armeabi"
+
+                // 指定Application.mk
+                arguments "NDK_APPLICATION_MK:=src/main/jni/Application.mk"
+                // 输出ABI
+                abiFilters "armeabi", "armeabi-v7a", "x86"
+                // c编译选项，可自定义，如ENABLE_DEBUG_LOG为控制是否输出debug日志
+                cFlags "-DENABLE_DEBUG_LOG"
             }
-        }*/
+        }
     }
 
-/*    externalNativeBuild {
+
+    externalNativeBuild {
         ndkBuild {
             path "src/main/jni/Android.mk"
         }
-    }*/
+    }
 
     buildTypes {
         release {

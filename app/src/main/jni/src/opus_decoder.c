@@ -104,7 +104,7 @@ int opus_decoder_init(OpusDecoder *st, opus_int32 Fs, int channels)
       return OPUS_BAD_ARG;
 
    OPUS_CLEAR((char*)st, opus_decoder_get_size(channels));
-   /* Initialize SILK encoder */
+   /* Initialize SILK decoder */
    ret = silk_Get_Decoder_Size(&silkDecSizeBytes);
    if (ret)
       return OPUS_INTERNAL_ERROR;
@@ -891,12 +891,32 @@ int opus_decoder_ctl(OpusDecoder *st, int request, ...)
    break;
    case OPUS_GET_LAST_PACKET_DURATION_REQUEST:
    {
-      opus_uint32 *value = va_arg(ap, opus_uint32*);
+      opus_int32 *value = va_arg(ap, opus_int32*);
       if (!value)
       {
          goto bad_arg;
       }
       *value = st->last_packet_duration;
+   }
+   break;
+   case OPUS_SET_PHASE_INVERSION_DISABLED_REQUEST:
+   {
+       opus_int32 value = va_arg(ap, opus_int32);
+       if(value<0 || value>1)
+       {
+          goto bad_arg;
+       }
+       celt_decoder_ctl(celt_dec, OPUS_SET_PHASE_INVERSION_DISABLED(value));
+   }
+   break;
+   case OPUS_GET_PHASE_INVERSION_DISABLED_REQUEST:
+   {
+       opus_int32 *value = va_arg(ap, opus_int32*);
+       if (!value)
+       {
+          goto bad_arg;
+       }
+       celt_decoder_ctl(celt_dec, OPUS_GET_PHASE_INVERSION_DISABLED(value));
    }
    break;
    default:
